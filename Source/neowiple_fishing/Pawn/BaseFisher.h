@@ -7,6 +7,7 @@
 #include "BaseFisher.generated.h"
 
 class UCameraComponent;
+class UCurveFloat;
 
 UCLASS(Abstract, Blueprintable)
 class NEOWIPLE_FISHING_API ABaseFisher : public APawn
@@ -17,10 +18,28 @@ public:
 	ABaseFisher();
 
 	virtual void			SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual void			Tick(float DeltaSeconds);
+
+	UFUNCTION(BlueprintCallable, Category = "Throwing")
+		float				GetThrowingPower() const { return ThrowingOutput; }
 
 	UPROPERTY(VisibleAnywhere, Category="Camera")
 		UCameraComponent*	CameraComponent;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Throwing")
+		TWeakObjectPtr<UCurveFloat>	ThrowingCurve;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Throwing")
+		float				ThrowingSpeed;
+
 protected:
 	virtual void			BeginPlay() override;
+	virtual void			TouchPressed();
+	virtual void			TouchReleased();
+
+	void					UpdateThrowingPower(float DeltaSeconds);
+
+	bool					IsTouch;
+	float					ThrowingInput;
+	float					ThrowingOutput;
 };
