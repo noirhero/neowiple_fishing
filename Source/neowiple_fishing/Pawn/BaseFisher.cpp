@@ -14,6 +14,7 @@ ABaseFisher::ABaseFisher()
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
 	CameraComponent->SetupAttachment(RootComponent);
 
+	ThrowingCurve = nullptr;
 	ThrowingSpeed = 1.0f;
 
 	IsTouch = false;
@@ -42,6 +43,11 @@ void ABaseFisher::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 void ABaseFisher::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if (nullptr == ThrowingCurve)
+	{
+		ThrowingCurve = CreateDefaultSubobject<UCurveFloat>(TEXT("ThrowingCurve"));
+	}
 }
 
 void ABaseFisher::TouchPressed()
@@ -57,7 +63,7 @@ void ABaseFisher::TouchReleased()
 
 void ABaseFisher::UpdateThrowingPower(float DeltaSeconds)
 {
-	if (false == IsTouch)
+	if (false == IsTouch || nullptr == ThrowingCurve)
 	{
 		return;
 	}

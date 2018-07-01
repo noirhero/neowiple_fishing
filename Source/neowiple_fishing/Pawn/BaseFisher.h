@@ -27,7 +27,7 @@ public:
 		UCameraComponent*	CameraComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Throwing")
-		TWeakObjectPtr<UCurveFloat>	ThrowingCurve;
+		UCurveFloat*		ThrowingCurve;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Throwing")
 		float				ThrowingSpeed;
