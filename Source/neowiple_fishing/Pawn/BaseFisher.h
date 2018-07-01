@@ -36,6 +36,7 @@ protected:
 	virtual void			BeginPlay() override;
 	virtual void			TouchPressed();
 	virtual void			TouchReleased();
+	virtual void			TouchLeftX(float Scale);
 
 	void					UpdateThrowingPower(float DeltaSeconds);
 

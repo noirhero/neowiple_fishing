@@ -38,6 +38,7 @@ void ABaseFisher::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 	PlayerInputComponent->BindAction(TEXT("TouchScreen"), EInputEvent::IE_Pressed, this, &ABaseFisher::TouchPressed);
 	PlayerInputComponent->BindAction(TEXT("TouchScreen"), EInputEvent::IE_Released, this, &ABaseFisher::TouchReleased);
+	PlayerInputComponent->BindAxis(TEXT("TouchLeftX"), this, &ABaseFisher::TouchLeftX);
 }
 
 void ABaseFisher::BeginPlay()
@@ -59,6 +60,16 @@ void ABaseFisher::TouchPressed()
 void ABaseFisher::TouchReleased()
 {
 	IsTouch = false;
+}
+
+void ABaseFisher::TouchLeftX(float Scale)
+{
+	if (0.0f == Scale)
+	{
+		return;
+	}
+
+	GEngine->AddOnScreenDebugMessage(-1, 0.1f, FColor::Red, FString::Printf(TEXT("LeftController : %f"), Scale));
 }
 
 void ABaseFisher::UpdateThrowingPower(float DeltaSeconds)
